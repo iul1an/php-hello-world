@@ -1,0 +1,20 @@
+version: '3'
+services:
+  hello-app:
+    container_name: hello-app
+    build: .
+    networks:
+    - hello-app-network
+  hello-app-nginx:
+    image: nginx:1.19.1-alpine
+    container_name: hello-app-nginx
+    ports:
+    - 8080:80
+    volumes: 
+    - ./src/hello.conf:/etc/nginx/conf.d/default.conf
+    networks:
+    - hello-app-network
+    depends_on:
+    - hello-app
+networks:
+  hello-app-network:
